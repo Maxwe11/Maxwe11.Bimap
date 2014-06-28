@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3AD96DFC-09AE-4184-804C-6B378EF97BCD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Maxwe11.Bimap</RootNamespace>
+    <AssemblyName>Maxwe11.Bimap</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BitsReader.cs" />
+    <Compile Include="BitsCount.cs" />
+    <Compile Include="Numbers\Integer64.cs" />
+    <Compile Include="Numbers\INumbersVisitor.cs" />
+    <Compile Include="Attributes\BimapAttribute.cs" />
+    <Compile Include="Numbers\INumber.cs" />
+    <Compile Include="ObjectReader.cs" />
+    <Compile Include="Numbers\Double.cs" />
+    <Compile Include="Numbers\Float.cs" />
+    <Compile Include="Numbers\Integer16.cs" />
+    <Compile Include="Numbers\Integer32.cs" />
+    <Compile Include="Numbers\Integer8.cs" />
+    <Compile Include="NumbersReaderVisitor.cs" />
+    <Compile Include="Property.cs" />
+    <Compile Include="Numbers\UnsignedInteger16.cs" />
+    <Compile Include="Numbers\UnsignedInteger32.cs" />
+    <Compile Include="Numbers\UnsignedInteger64.cs" />
+    <Compile Include="Numbers\UnsignedInteger8.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
