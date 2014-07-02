@@ -7,6 +7,9 @@
 
     using Maxwe11.Bimap.Attributes;
 
+    /// <summary>
+    /// Provides a means of reading a sequence of objects from byte array
+    /// </summary>
     public sealed class ObjectReader
     {
         #region Fields
@@ -36,14 +39,30 @@
 
         #region Properties
 
+        /// <summary>
+        /// Gets the target type of <see cref="ObjectReader"/>
+        /// </summary>
         public Type TargetType { get { return mTargetType; } }
 
+        /// <summary>
+        /// Gets the current bit-position within the byte array
+        /// </summary>
         public int BitsRead { get { return mBitsReader.BitsRead; } }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Creates a new <see cref="ObjectReader"/> instance for reading the supplied data
+        /// </summary>
+        /// <typeparam name="T">The type of objects for reading</typeparam>
+        /// <param name="bytes">The array of bytes from which to read objects</param>
+        /// <param name="cache"></param>
+        /// <returns>An object that is used to read objects from byte array</returns>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <remarks>For now target type <typeparamref name="T"/> should be a POCO class</remarks>
         public static ObjectReader Create<T>(byte[] bytes, bool cache = true) where T : class
         {
             var type = typeof(T);
@@ -124,6 +143,11 @@
             return mappedProperties;
         }
 
+        /// <summary>
+        /// Populates all properties marked with <see cref="Bimap.Attributes.BimapAttribute"/>
+        /// </summary>
+        /// <param name="object">Object for reading</param>
+        /// <remarks><see cref="object"/> should have the same type as target type of <see cref="ObjectReader"/></remarks>
         public void Read(object @object)
         {
             var visitor = new NumbersReaderVisitor(mBitsReader);
@@ -133,6 +157,11 @@
             }
         }
 
+        /// <summary>
+        /// Sets new byte array for reading objects
+        /// </summary>
+        /// <param name="bytes">The array of unsigned bytes from which to read objects</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public void Reset(byte[] bytes)
         {
             mBitsReader.Reset(bytes);

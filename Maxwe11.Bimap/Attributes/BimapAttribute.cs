@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Specifies order id and amount of bits for a property
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = false)]
     public class BimapAttribute : Attribute
     {
@@ -15,6 +18,11 @@
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BimapAttribute"/> class
+        /// </summary>
+        /// <param name="OrderId">Used for reading properties in specified order</param>
+        /// <param name="BitsCount">Used for specifying amount of bits for properties of integer types</param>
         // ReSharper disable InconsistentNaming
         public BimapAttribute(int OrderId, int BitsCount = -1)
         // ReSharper restore InconsistentNaming
@@ -27,8 +35,14 @@
 
         #region Properties
 
+        /// <summary>
+        /// Gets property order id
+        /// </summary>
         public int OrderId { get { return mOrderId; } }
 
+        /// <summary>
+        /// Gets amount of bits for property
+        /// </summary>
         public int BitsCount { get { return mBitsCount; } }
 
         #endregion
