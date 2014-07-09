@@ -11,6 +11,9 @@
         {
             BitsReaderSample();
             ObjectReaderSample();
+
+            ReadMeExample1();
+            ReadMeExample2();
         }
 
         private static void BitsReaderSample()
@@ -71,7 +74,7 @@
 
         private static void ObjectReaderSample()
         {
-            var bytes = new byte[] { 255, 0, 255, 5, 13, 170 };
+            byte[] bytes = { 255, 0, 255, 5, 13, 170 };
             var frame = new FooFrame();
             var reader = new ObjectReader<FooFrame>(bytes);
             reader.Read(frame);
@@ -80,6 +83,43 @@
             Console.WriteLine(frame.Spam); //3333
             Console.WriteLine(frame.Bar);  //42
             Console.WriteLine(frame.Eggs); //-2
+        }
+
+        private static void ReadMeExample1()
+        {
+            byte[] bytes = { 25, 26, 27, 28, 29, 30, 31 };
+            var reader = new BitsReader(bytes);
+            byte A = reader.ReadUInt8(4);
+            short B = reader.ReadInt16(12);
+            int C = reader.ReadInt32(24);
+            ushort D = reader.ReadUInt16(13);
+            sbyte E = reader.ReadInt8(3);
+        }
+
+        class Foo
+        {
+            [Bimap(OrderId: 1, BitsCount: 4)]
+            public byte A { get; set; }
+
+            [Bimap(OrderId: 2, BitsCount: 12)]
+            public short B { get; set; }
+
+            [Bimap(OrderId: 3, BitsCount: 24)]
+            public  int C { get; set; }
+
+            [Bimap(OrderId: 4, BitsCount: 13)]
+            public ushort D { get; set; }
+
+            [Bimap(OrderId: 5, BitsCount: 3)]
+            public sbyte E { get; set; }
+        }
+
+        private static void ReadMeExample2()
+        {
+            byte[] bytes = { 25, 26, 27, 28, 29, 30, 31 };
+            var reader = new ObjectReader<Foo>(bytes);
+            var frame = new Foo();
+            reader.Read(frame);
         }
     }
 }
