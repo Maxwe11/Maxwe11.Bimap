@@ -64,7 +64,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 8-bit unsigned integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 8]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         public byte ReadUInt8(int bitsCount = BitsCount.BitsPerByte)
         {
             BitsCount.EnsureBitsCount(bitsCount, BitsCount.BitsPerByte);
@@ -83,7 +83,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 16-bit unsigned integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 16]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         [CLSCompliant(false)]
         public ushort ReadUInt16(int bitsCount = BitsCount.BitsPerWord)
         {
@@ -103,7 +103,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 32-bit unsigned integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 32]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         [CLSCompliant(false)]
         public uint ReadUInt32(int bitsCount = BitsCount.BitsPerDWord)
         {
@@ -123,7 +123,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 64-bit unsigned integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 64]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         [CLSCompliant(false)]
         public ulong ReadUInt64(int bitsCount = BitsCount.BitsPerQWord)
         {
@@ -143,7 +143,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 8-bit signed integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 8]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         [CLSCompliant(false)]
         public sbyte ReadInt8(int bitsCount = BitsCount.BitsPerByte)
         {
@@ -175,7 +175,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 16-bit signed integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 16]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         public short ReadInt16(int bitsCount = BitsCount.BitsPerWord)
         {
             BitsCount.EnsureBitsCount(bitsCount, BitsCount.BitsPerWord);
@@ -206,7 +206,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 32-bit signed integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 32]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         public int ReadInt32(int bitsCount = BitsCount.BitsPerDWord)
         {
             BitsCount.EnsureBitsCount(bitsCount, BitsCount.BitsPerDWord);
@@ -237,7 +237,7 @@
         /// <param name="bitsCount"></param>
         /// <returns>The 64-bit signed integer value of the specified amount of bits</returns>
         /// <exception cref="ArgumentException">Thrown if <paramref name="bitsCount"/> is not in inclusive range [1, 64]</exception>
-        /// <exception cref="InvalidOperationException">Thow if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
+        /// <exception cref="InvalidOperationException">Thrown if requested <paramref name="bitsCount"/> amount of bits couldn't be read</exception>
         public long ReadInt64(int bitsCount = BitsCount.BitsPerQWord)
         {
             BitsCount.EnsureBitsCount(bitsCount, BitsCount.BitsPerQWord);
