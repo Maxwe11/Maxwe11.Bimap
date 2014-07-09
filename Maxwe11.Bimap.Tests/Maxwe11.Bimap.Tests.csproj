@@ -56,7 +56,6 @@
     <Compile Include="ObjectReaderFixtures\Targets\HasNoPublicInstanceProperty.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\HasNoMappedProperty.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\Empty.cs" />
-    <Compile Include="ObjectReaderFixtures\CreateMethodFixture.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\PropertyHasPrivateSetter.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\PropertyTypeNotSupport.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\SuccessTest.cs" />
