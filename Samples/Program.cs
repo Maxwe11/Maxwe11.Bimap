@@ -73,7 +73,7 @@
         {
             var bytes = new byte[] { 255, 0, 255, 5, 13, 170 };
             var frame = new FooFrame();
-            var reader = ObjectReader.Create<FooFrame>(bytes);
+            var reader = new ObjectReader<FooFrame>(bytes);
             reader.Read(frame);
 
             Console.WriteLine(frame.Foo);  //-65281

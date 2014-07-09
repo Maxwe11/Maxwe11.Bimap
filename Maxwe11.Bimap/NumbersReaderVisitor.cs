@@ -14,6 +14,8 @@
             mBitsReader = reader;
         }
 
+        public int BitsRead { get { return mBitsReader.BitsRead; } }
+
         public void Visit(Integer8 value)
         {
             value.TypedValue = mBitsReader.ReadInt8(value.BitsCount);
@@ -62,6 +64,11 @@
         public void Visit(Double value)
         {
             value.TypedValue = mBitsReader.ReadDouble();
+        }
+
+        public void Reset(byte[] bytes)
+        {
+            mBitsReader.Reset(bytes);
         }
     }
 }

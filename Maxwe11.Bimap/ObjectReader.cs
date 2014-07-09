@@ -8,46 +8,15 @@
     using Maxwe11.Bimap.Attributes;
 
     /// <summary>
-    /// Provides a means of reading a sequence of objects from byte array
+    /// Provides static methods for creating objects.
     /// </summary>
-    public sealed class ObjectReader
+    public static class ObjectReader
     {
         #region Fields
 
         private static readonly MethodInfo CreatePropertyMethod = typeof(Property).GetMethod("Create", BindingFlags.Static | BindingFlags.Public);
 
-        private static readonly Dictionary<Type, IEnumerable<Property>> Cache = new Dictionary<Type, IEnumerable<Property>>();
-
-        private readonly Type mTargetType;
-
-        private readonly IEnumerable<Property> mProperties;
-
-        private readonly BitsReader mBitsReader;
-
-        #endregion
-
-        #region Constructor
-
-        private ObjectReader(Type targetType, IEnumerable<Property> properties, BitsReader reader)
-        {
-            mTargetType = targetType;
-            mProperties = properties;
-            mBitsReader = reader;
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets the target type of <see cref="ObjectReader"/>
-        /// </summary>
-        public Type TargetType { get { return mTargetType; } }
-
-        /// <summary>
-        /// Gets the current bit-position within the byte array
-        /// </summary>
-        public int BitsRead { get { return mBitsReader.BitsRead; } }
+        private static readonly Dictionary<Type, List<Property>> Cache = new Dictionary<Type, List<Property>>();
 
         #endregion
 
@@ -58,30 +27,27 @@
         /// </summary>
         /// <typeparam name="T">The type of objects for reading</typeparam>
         /// <param name="bytes">The array of bytes from which to read objects</param>
-        /// <param name="cache"></param>
         /// <returns>An object that is used to read objects from byte array</returns>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentNullException"></exception>
-        /// <remarks>For now target type <typeparamref name="T"/> should be a POCO class</remarks>
-        public static ObjectReader Create<T>(byte[] bytes, bool cache = true) where T : class
+        /// <remarks>Target type <typeparamref name="T"/> should be a POCO class</remarks>
+        public static ObjectReader<T> Create<T>(byte[] bytes) where T : class
         {
             var type = typeof(T);
-            IEnumerable<Property> props;
+            List<Property> props;
 
             if (Cache.TryGetValue(type, out props) == false)
             {
                 props = GetTypeProperties(type);
-
-                if (cache)
-                    Cache.Add(type, props);
+                Cache.Add(type, props);
             }
 
             var reader = new BitsReader(bytes);
 
-            return new ObjectReader(type, props, reader);
+            return new ObjectReader<T>(props, reader);
         }
 
-        private static IEnumerable<Property> GetTypeProperties(Type type)
+        internal static List<Property> GetTypeProperties(Type type)
         {
             var props = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
 
@@ -94,7 +60,7 @@
             var propsInfo = props
                             .Select(x => new { Property = x, attr = x.GetCustomAttributes(typeof(BimapAttribute), false) })
                             .Where(x => x.attr.Length != 0)
-                            .Select(x => new { x.Property, Map = (BimapAttribute)x.attr[0]})
+                            .Select(x => new { x.Property, Map = (BimapAttribute)x.attr[0] })
                             .OrderBy(x => x.Map.OrderId)
                             .ToArray();
 
@@ -112,7 +78,7 @@
                 var prop = propInfo.Property;
                 var last = mappedProperties.LastOrDefault();
 
-                if (i > 0  && propInfo.Map.OrderId == propsInfo[i - 1].Map.OrderId)
+                if (i > 0 && propInfo.Map.OrderId == propsInfo[i - 1].Map.OrderId)
                 {
                     var msg = string.Format("Properties \'{0}\' and \'{1}\' has same order id", last.Name, prop.Name);
                     throw new ArgumentException(msg);
@@ -143,17 +109,80 @@
             return mappedProperties;
         }
 
+        #endregion
+    }
+
+    /// <summary>
+    /// Provides a means of reading a sequence of objects from byte array
+    /// </summary>
+    /// <remarks>Target type <typeparamref name="T"/> should be a POCO class</remarks>
+    public sealed class ObjectReader<T> where T : class
+    {
+        #region Fields
+
+        private readonly IEnumerable<Property> mProperties;
+
+        private readonly NumbersReaderVisitor mVisitor;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitsReader"/> class
+        /// </summary>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ObjectReader()
+        {
+            mProperties = ObjectReader.GetTypeProperties(typeof(T));
+            mVisitor = new NumbersReaderVisitor(new BitsReader(new byte[0]));
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitsReader"/> class
+        /// </summary>
+        /// <param name="bytes">The array of bytes from which to read objects</param>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="bytes"/> is null</exception>
+        public ObjectReader(byte[] bytes)
+        {
+            mProperties = ObjectReader.GetTypeProperties(typeof(T));
+            mVisitor = new NumbersReaderVisitor(new BitsReader(bytes));
+        }
+
+        internal ObjectReader(IEnumerable<Property> properties, BitsReader reader)
+        {
+            mProperties = properties;
+            mVisitor = new NumbersReaderVisitor(reader);
+        }
+
+        #endregion
+
+        #region Properties
+
+       /// <summary>
+        /// Gets the current bit-position within the byte array
+        /// </summary>
+        public int BitsRead { get { return mVisitor.BitsRead; } }
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Populates all properties marked with <see cref="Bimap.Attributes.BimapAttribute"/>
         /// </summary>
-        /// <param name="object">Object for reading</param>
-        /// <remarks><see cref="object"/> should have the same type as target type of <see cref="ObjectReader"/></remarks>
-        public void Read(object @object)
+        /// <param name="value">Object for reading</param>
+        /// <exception cref="ArgumentNullException">Thrown if <paramref name="value"/> is null</exception>
+        public void Read(T value)
         {
-            var visitor = new NumbersReaderVisitor(mBitsReader);
+            if (value == null)
+                throw new ArgumentNullException("value");
+
             foreach (var property in mProperties)
             {
-                property.Apply(@object, visitor);
+                property.Apply(value, mVisitor);
             }
         }
 
@@ -164,7 +193,7 @@
         /// <exception cref="ArgumentNullException"></exception>
         public void Reset(byte[] bytes)
         {
-            mBitsReader.Reset(bytes);
+            mVisitor.Reset(bytes);
         }
 
         #endregion
