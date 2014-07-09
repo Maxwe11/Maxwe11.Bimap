@@ -15,15 +15,16 @@ Example of usage
 For example you have the frame with the following structure:
 
     |   A   |    B   |    C   |    D   |   E   |
-	|:-----:|:------:|:------:|:------:|:-----:|
-	| 4 bit | 12 bit | 24 bit | 13 bit | 3 bit |
-	|  byte |  short |   int  |  long  | sbyte |
+    |:-----:|:------:|:------:|:------:|:-----:|
+    | 4 bit | 12 bit | 24 bit | 13 bit | 3 bit |
+    |:-----:|:------:|:------:|:------:|:-----:|
+    |  byte |  short |   int  | ushort | sbyte |
 
 You can easily retrieve each part of frame separately
 
     byte[] bytes = //...receive bytes
     var reader = new BitsReader(bytes);
-	byte A = reader.ReadUInt8(4);
+    byte A = reader.ReadUInt8(4);
     short B = reader.ReadInt16(12);
     int C = reader.ReadInt32(24);
     ushort D = reader.ReadUInt16(13);
@@ -31,7 +32,7 @@ You can easily retrieve each part of frame separately
 	
 or create a frame class
 
-	class Foo
+    class Foo
     {
         [Bimap(OrderId: 1, BitsCount: 4)]
         public byte A { get; set; }
