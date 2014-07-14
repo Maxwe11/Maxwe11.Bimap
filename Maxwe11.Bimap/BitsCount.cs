@@ -1,4 +1,4 @@
-﻿namespace Maxwe11.Bimap
+namespace Maxwe11.Bimap
 {
     using System;
 
@@ -16,7 +16,8 @@
         {
             if (bitsCount <= 0 || bitsCount > maxBitsCount)
             {
-                throw new ArgumentException("bits count should be in inclusive range [1, " + maxBitsCount + "]");
+            	var first = maxBitsCount.ToString();
+                throw new ArgumentException("bits count should be in inclusive range [1, " + first + "]");
             }
         }
     }

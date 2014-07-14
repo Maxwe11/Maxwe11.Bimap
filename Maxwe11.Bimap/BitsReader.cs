@@ -342,7 +342,11 @@
         private static void EnsureRequestedBitsCount(int bitsRead, int requestedBits, int allBitsCount)
         {
             if (bitsRead + requestedBits > allBitsCount)
-                throw new InvalidOperationException("Can't read " + requestedBits + " bits. Only " + (allBitsCount - bitsRead) + " bits available");
+            {
+            	var first = requestedBits.ToString();
+            	var second = (allBitsCount - bitsRead).ToString();
+                throw new InvalidOperationException("Can't read " + first + " bits. Only " + second + " bits available");
+            }
         }
 
         #endregion
