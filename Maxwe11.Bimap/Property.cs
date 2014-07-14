@@ -43,25 +43,21 @@
         public static Property Create<TDeclared, TTarget>(string name, MethodInfo info, int bitsCount)
         {
             var type = typeof(TTarget);
-            var typeCode = Type.GetTypeCode(type);
             INumber number = null;
 
             try
             {
-                number = CreateNumberForType(typeCode, bitsCount);
+                number = CreateNumberForType(type, bitsCount);
             }
             catch (ArgumentException e)
             {
                 var msg = "Failed to map property \'" + name + "\'. See inner exception for details";
-                throw new ArgumentException(msg, e);
+                throw new BimapException(msg, e);
             }
-
-            if (number == null)
+            catch (NotSupportedException e)
             {
                 var msg = "Failed to map property \'" + name + "\'. See inner exception for details";
-                var inner = new NotSupportedException("Not supported type: \'" + type.Name + "\'");
-
-                throw new ArgumentException(msg, inner);
+                throw new BimapException(msg, e);
             }
 
             var setter = (Action<TDeclared, TTarget>)Delegate.CreateDelegate(typeof(Action<TDeclared, TTarget>), info);
@@ -70,8 +66,10 @@
             return new Property(name, setter2, number);
         }
 
-        private static INumber CreateNumberForType(TypeCode typeCode, int bitsCount)
+        private static INumber CreateNumberForType(Type type, int bitsCount)
         {
+            var typeCode = Type.GetTypeCode(type);
+
             if (typeCode == TypeCode.Byte || typeCode == TypeCode.SByte)
             {
                 if (bitsCount == -1)
@@ -137,7 +135,7 @@
             if (typeCode == TypeCode.Single)
             {
                 if (bitsCount != -1)
-                    throw new ArgumentException("For properties of type Single use default bits count value");
+                    throw new ArgumentException("For properties of type Single default bits count value should be used");
 
                 return new Float();
             }
@@ -145,12 +143,12 @@
             if (typeCode == TypeCode.Double)
             {
                 if (bitsCount != -1)
-                    throw new ArgumentException("For properties of type Double use default bits count value");
+                    throw new ArgumentException("For properties of type Double default bits count value should be used");
 
                 return new Double();
             }
 
-            return null;
+            throw new NotSupportedException("Not supported type: \'" + type.Name + "\'");
         }
 
         public void Apply(object target, INumbersVisitor visitor)
@@ -162,7 +160,7 @@
             catch (InvalidOperationException e)
             {
                 var msg = "Failed to read property \'" + mName + "\'. See inner exception for details";
-                throw new InvalidOperationException(msg, e);
+                throw new BimapException(msg, e);
             }
 
             mSetter(target, mNumber.Value);

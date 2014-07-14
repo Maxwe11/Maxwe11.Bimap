@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BimapException.cs" />
     <Compile Include="BitsReader.cs" />
     <Compile Include="BitsCount.cs" />
     <Compile Include="Numbers\Integer64.cs" />

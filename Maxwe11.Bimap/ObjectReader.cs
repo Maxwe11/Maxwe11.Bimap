@@ -54,7 +54,7 @@
             if (props.Length == 0)
             {
                 var msg = "Target type \'" + type.Name + "\' has no public instance properties";
-                throw new ArgumentException(msg);
+                throw new BimapException(msg);
             }
 
             var propsInfo = props
@@ -66,8 +66,8 @@
 
             if (propsInfo.Length == 0)
             {
-                var msg = "Target type \'" + type.Name + "\' has no properties with \'BimapAttribute\' attribute";
-                throw new ArgumentException(msg);
+                var msg = "Target type \'" + type.Name + "\' has no properties with mapping attribute";
+                throw new BimapException(msg);
             }
 
             var mappedProperties = new List<Property>(propsInfo.Length);
@@ -80,16 +80,16 @@
 
                 if (i > 0 && propInfo.Map.OrderId == propsInfo[i - 1].Map.OrderId)
                 {
-                    var msg = string.Format("Properties \'{0}\' and \'{1}\' has same order id", last.Name, prop.Name);
-                    throw new ArgumentException(msg);
+                    var msg = "Properties \'" + last.Name + "\' and \'" + prop.Name + "\' has same order id";
+                    throw new BimapException(msg);
                 }
 
                 var setter = prop.GetSetMethod();
 
                 if (setter == null)
                 {
-                    var msg = string.Format("Property \'{0}\' that you want to map has no accessible setter", prop.Name);
-                    throw new ArgumentException(msg);
+                    var msg = "Property \'" + prop.Name + "' that you want to map has no accessible setter";
+                    throw new BimapException(msg);
                 }
 
                 var bitsCount = propInfo.Map.BitsCount;
