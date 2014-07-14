@@ -1,6 +1,7 @@
 namespace Maxwe11.Bimap
 {
     using System;
+    using System.Globalization;
 
     static class BitsCount
     {
@@ -16,7 +17,7 @@ namespace Maxwe11.Bimap
         {
             if (bitsCount <= 0 || bitsCount > maxBitsCount)
             {
-            	var first = maxBitsCount.ToString();
+            	var first = maxBitsCount.ToString(CultureInfo.InvariantCulture);
                 throw new ArgumentException("bits count should be in inclusive range [1, " + first + "]");
             }
         }
