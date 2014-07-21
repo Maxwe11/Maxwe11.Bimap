@@ -2,22 +2,23 @@
 {
     using System;
     using System.Collections;
+    using System.Globalization;
 
     /// <summary>
     /// Reads primitive data types as binary values with a specific amount of bits
     /// </summary>
     /// <remarks>
     /// For now <see cref="BitsReader"/> supports following types: 
-    /// * <see cref="Byte"/>,
-    /// * <see cref="UInt16"/>,
-    /// * <see cref="UInt32"/>, 
-    /// * <see cref="UInt64"/>,
-    /// * <see cref="SByte"/>,
-    /// * <see cref="Int16"/>,
-    /// * <see cref="Int32"/>, 
-    /// * <see cref="Int64"/>,
-    /// * <see cref="Single"/>, 
-    /// * <see cref="Double"/>,
+    /// <see cref="Byte"/>,
+    /// <see cref="UInt16"/>,
+    /// <see cref="UInt32"/>, 
+    /// <see cref="UInt64"/>,
+    /// <see cref="SByte"/>,
+    /// <see cref="Int16"/>,
+    /// <see cref="Int32"/>, 
+    /// <see cref="Int64"/>,
+    /// <see cref="Single"/>, 
+    /// <see cref="Double"/>,
     /// </remarks>
 
     public sealed class BitsReader
@@ -343,9 +344,10 @@
         {
             if (bitsRead + requestedBits > allBitsCount)
             {
-            	var first = requestedBits.ToString();
-            	var second = (allBitsCount - bitsRead).ToString();
-                throw new InvalidOperationException("Can't read " + first + " bits. Only " + second + " bits available");
+            	var first = "Can't read " + requestedBits.ToString(CultureInfo.InvariantCulture) ;
+            	var second = (allBitsCount - bitsRead).ToString(CultureInfo.InvariantCulture);
+                
+                throw new InvalidOperationException(first + " bits. Only " + second + " bits available");
             }
         }
 
