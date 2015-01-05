@@ -1,6 +1,7 @@
 Maxwe11.Bimap
 =========
-
+[![Build status](https://ci.appveyor.com/api/projects/status/noke8oadgvuynshn?svg=true)](https://ci.appveyor.com/project/Maxwe11/maxwe11-bimap)
+[![Build status](https://ci.appveyor.com/api/projects/status/noke8oadgvuynshn/branch/master?svg=true)](https://ci.appveyor.com/project/Maxwe11/maxwe11-bimap/branch/master)
 A library for mapping binary data onto .NET primitive types. Mapping to objects of custom classes also supported.
 
 Install
