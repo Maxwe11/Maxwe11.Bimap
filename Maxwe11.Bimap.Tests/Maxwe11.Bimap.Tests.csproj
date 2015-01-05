@@ -49,6 +49,7 @@
     <Compile Include="BitsReaderFixtures\UInt32Fixture.cs" />
     <Compile Include="BitsReaderFixtures\UInt16Fixture.cs" />
     <Compile Include="BitsReaderFixtures\UInt8Fixture.cs" />
+    <Compile Include="ObjectReaderFixtures\ByteArrayFixture.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\DoublePropertyHasNonDefaultBitsCount.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\FloatPropertyHasNonDefaultBitsCount.cs" />
     <Compile Include="ObjectReaderFixtures\Targets\PropertyHasNoSetter.cs" />

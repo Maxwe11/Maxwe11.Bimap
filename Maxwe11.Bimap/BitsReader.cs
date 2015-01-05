@@ -4,6 +4,8 @@
     using System.Collections;
     using System.Globalization;
 
+    using Maxwe11.Bimap.Impl.Helpers;
+
     /// <summary>
     /// Reads primitive data types as binary values with a specific amount of bits
     /// </summary>

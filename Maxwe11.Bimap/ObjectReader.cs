@@ -3,8 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
-
+    
+    using Maxwe11.Bimap.Impl;
     using Maxwe11.Bimap.Attributes;
 
     /// <summary>
@@ -94,10 +96,11 @@
 
                 var bitsCount = propInfo.Map.BitsCount;
 
+                
                 try
                 {
                     var creator = CreatePropertyMethod.MakeGenericMethod(prop.DeclaringType, prop.PropertyType);
-                    var property = (Property)creator.Invoke(null, new object[] { prop.Name, setter, bitsCount });
+                    var property = propInfo.Map.MakeProperty(creator, prop.Name, setter);
                     mappedProperties.Add(property);
                 }
                 catch (TargetInvocationException e)
@@ -122,7 +125,7 @@
 
         private readonly IEnumerable<Property> mProperties;
 
-        private readonly NumbersReaderVisitor mVisitor;
+        private readonly PropertiesReaderVisitor mVisitor;
 
         #endregion
 
@@ -136,7 +139,7 @@
         public ObjectReader()
         {
             mProperties = ObjectReader.GetTypeProperties(typeof(T));
-            mVisitor = new NumbersReaderVisitor(new BitsReader(new byte[0]));
+            mVisitor = new PropertiesReaderVisitor(new BitsReader(new byte[0]));
         }
 
         /// <summary>
@@ -148,13 +151,13 @@
         public ObjectReader(byte[] bytes)
         {
             mProperties = ObjectReader.GetTypeProperties(typeof(T));
-            mVisitor = new NumbersReaderVisitor(new BitsReader(bytes));
+            mVisitor = new PropertiesReaderVisitor(new BitsReader(bytes));
         }
 
         internal ObjectReader(IEnumerable<Property> properties, BitsReader reader)
         {
             mProperties = properties;
-            mVisitor = new NumbersReaderVisitor(reader);
+            mVisitor = new PropertiesReaderVisitor(reader);
         }
 
         #endregion
@@ -194,6 +197,21 @@
         public void Reset(byte[] bytes)
         {
             mVisitor.Reset(bytes);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="expr"></param>
+        /// <param name="info"></param>
+        public void ForMemberArray(Expression<Func<T, byte[]>> expr, Action<IPropertyInfo> info)
+        {
+            var memberExpr = expr.Body as MemberExpression;
+            if (memberExpr == null)
+                throw new ArgumentException("expr should be member expression");
+
+            var prop = mProperties.First(x => x.Name == memberExpr.Member.Name);
+            
         }
 
         #endregion

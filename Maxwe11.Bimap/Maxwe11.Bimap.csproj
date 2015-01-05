@@ -36,25 +36,29 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\BimapArrayAttribute.cs" />
     <Compile Include="BimapException.cs" />
     <Compile Include="BitsReader.cs" />
-    <Compile Include="BitsCount.cs" />
-    <Compile Include="Numbers\Integer64.cs" />
-    <Compile Include="Numbers\INumbersVisitor.cs" />
+    <Compile Include="Impl\Helpers\BitsCount.cs" />
+    <Compile Include="Impl\Properties\ByteArray.cs" />
+    <Compile Include="Impl\Properties\Integer64.cs" />
+    <Compile Include="Impl\IPropertiesVisitor.cs" />
     <Compile Include="Attributes\BimapAttribute.cs" />
-    <Compile Include="Numbers\INumber.cs" />
+    <Compile Include="Impl\IPropertyValue.cs" />
+    <Compile Include="Impl\PropertiesReaderVisitor.cs" />
+    <Compile Include="Impl\Property.cs" />
+    <Compile Include="Impl\PropertyInfo.cs" />
+    <Compile Include="IPropertyInfo.cs" />
     <Compile Include="ObjectReader.cs" />
-    <Compile Include="Numbers\Double.cs" />
-    <Compile Include="Numbers\Float.cs" />
-    <Compile Include="Numbers\Integer16.cs" />
-    <Compile Include="Numbers\Integer32.cs" />
-    <Compile Include="Numbers\Integer8.cs" />
-    <Compile Include="NumbersReaderVisitor.cs" />
-    <Compile Include="Property.cs" />
-    <Compile Include="Numbers\UnsignedInteger16.cs" />
-    <Compile Include="Numbers\UnsignedInteger32.cs" />
-    <Compile Include="Numbers\UnsignedInteger64.cs" />
-    <Compile Include="Numbers\UnsignedInteger8.cs" />
+    <Compile Include="Impl\Properties\Double.cs" />
+    <Compile Include="Impl\Properties\Float.cs" />
+    <Compile Include="Impl\Properties\Integer16.cs" />
+    <Compile Include="Impl\Properties\Integer32.cs" />
+    <Compile Include="Impl\Properties\Integer8.cs" />
+    <Compile Include="Impl\Properties\UnsignedInteger16.cs" />
+    <Compile Include="Impl\Properties\UnsignedInteger32.cs" />
+    <Compile Include="Impl\Properties\UnsignedInteger64.cs" />
+    <Compile Include="Impl\Properties\UnsignedInteger8.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

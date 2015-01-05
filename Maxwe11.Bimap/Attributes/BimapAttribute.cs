@@ -1,6 +1,8 @@
 ﻿namespace Maxwe11.Bimap.Attributes
 {
     using System;
+    using System.Reflection;
+    using Maxwe11.Bimap.Impl;
 
     /// <summary>
     /// Specifies order id and amount of bits for a property
@@ -44,6 +46,15 @@
         /// Gets amount of bits for property
         /// </summary>
         public int BitsCount { get { return mBitsCount; } }
+
+        #endregion
+
+        #region Methods
+
+        internal virtual Property MakeProperty(MethodInfo creator, string propertyName, MethodInfo propertySetter)
+        {
+            return (Property) creator.Invoke(null, new object[] {propertyName, propertySetter, BitsCount, null});
+        }
 
         #endregion
     }
