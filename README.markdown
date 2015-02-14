@@ -72,7 +72,3 @@ License
 MIT License (MIT)
 
 http://opensource.org/licenses/MIT
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Maxwe11/maxwe11.bimap/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
